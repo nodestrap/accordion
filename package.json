@@ -1,0 +1,46 @@
+{
+  "name": "@nodestrap/accordion",
+  "version": "4.0.0",
+  "description": "Represents a series of toggleable collapsing content.",
+  "type": "module",
+  "main": "dist/Accordion.jsx",
+  "types": "dist/Accordion.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodestrap/accordion.git"
+  },
+  "keywords": [
+    "list",
+    "group",
+    "series",
+    "content",
+    "collapse",
+    "toggle",
+    "component",
+    "element",
+    "react",
+    "nodestrap",
+    "styled"
+  ],
+  "author": "heymarco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nodestrap/accordion/issues"
+  },
+  "homepage": "https://github.com/nodestrap/accordion#readme",
+  "dependencies": {
+    "@cssfn/css-config": "^1.0.1",
+    "@cssfn/cssfn": "^1.0.3",
+    "@cssfn/react-cssfn": "^1.0.3",
+    "@nodestrap/accessibilities": "^4.0.1",
+    "@nodestrap/basic": "^4.0.2",
+    "@nodestrap/collapse": "^4.0.1",
+    "@nodestrap/indicator": "^4.0.2",
+    "@nodestrap/list": "^4.0.1",
+    "@types/react": "^17.0.36",
+    "react": "^17.0.2"
+  }
+}
