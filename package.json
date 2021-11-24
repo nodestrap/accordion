@@ -1,6 +1,6 @@
 {
   "name": "@nodestrap/accordion",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Represents a series of toggleable collapsing content.",
   "type": "module",
   "main": "dist/Accordion.jsx",
