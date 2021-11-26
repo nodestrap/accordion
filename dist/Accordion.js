@@ -145,53 +145,45 @@ export function AccordionItem(props) {
     // fn props:
     const propEnabled = usePropEnabled(props);
     // jsx:
-    return (<>
-        <ListItem 
-    // other props:
-    {...restProps} 
-    // semantics:
-    semanticTag={props.semanticTag ?? ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']} semanticRole={props.semanticRole ?? 'heading'} aria-expanded={props['aria-expanded'] ?? isActive} 
-    // accessibilities:
-    active={isActive} 
-    // behaviors:
-    actionCtrl={props.actionCtrl ?? true} 
-    // events:
-    onClick={(e) => {
-            props.onClick?.(e);
-            if (!e.defaultPrevented) {
-                handleToggleActive();
-                e.preventDefault();
-            } // if
-        }} onKeyDown={(e) => {
-            props.onKeyDown?.(e);
-            if (!e.defaultPrevented) {
-                if ((e.key === ' ') || (e.code === 'Space')) {
-                    // prevents pressing space for scrolling page
-                    e.preventDefault();
-                } // if
-            } // if
-        }} onKeyUp={(e) => {
-            props.onKeyUp?.(e);
-            if (!e.defaultPrevented) {
-                if ((e.key === ' ') || (e.code === 'Space')) {
+    return (React.createElement(React.Fragment, null,
+        React.createElement(ListItem, { ...restProps, 
+            // semantics:
+            semanticTag: props.semanticTag ?? ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], semanticRole: props.semanticRole ?? 'heading', "aria-expanded": props['aria-expanded'] ?? isActive, 
+            // accessibilities:
+            active: isActive, 
+            // behaviors:
+            actionCtrl: props.actionCtrl ?? true, 
+            // events:
+            onClick: (e) => {
+                props.onClick?.(e);
+                if (!e.defaultPrevented) {
                     handleToggleActive();
                     e.preventDefault();
                 } // if
-            } // if
-        }}>
-            {label}
-        </ListItem>
-        <Collapse 
-    // variants:
-    theme={props.theme} size={props.size} gradient={props.gradient} outlined={props.outlined} mild={props.mild} 
-    // accessibilities:
-    inheritEnabled={props.inheritEnabled} enabled={propEnabled} inheritActive={props.inheritActive ?? true} // change default value to `true`
-     active={isActive} 
-    // classes:
-    mainClass={props.mainClass ?? sheet.main}>
-            {children}
-        </Collapse>
-    </>);
+            }, onKeyDown: (e) => {
+                props.onKeyDown?.(e);
+                if (!e.defaultPrevented) {
+                    if ((e.key === ' ') || (e.code === 'Space')) {
+                        // prevents pressing space for scrolling page
+                        e.preventDefault();
+                    } // if
+                } // if
+            }, onKeyUp: (e) => {
+                props.onKeyUp?.(e);
+                if (!e.defaultPrevented) {
+                    if ((e.key === ' ') || (e.code === 'Space')) {
+                        handleToggleActive();
+                        e.preventDefault();
+                    } // if
+                } // if
+            } }, label),
+        React.createElement(Collapse, { 
+            // variants:
+            theme: props.theme, size: props.size, gradient: props.gradient, outlined: props.outlined, mild: props.mild, 
+            // accessibilities:
+            inheritEnabled: props.inheritEnabled, enabled: propEnabled, inheritActive: props.inheritActive ?? true, active: isActive, 
+            // classes:
+            mainClass: props.mainClass ?? sheet.main }, children)));
 }
 AccordionItem.prototype = ListItem.prototype; // mark as ListItem compatible
 export { AccordionItem as Item };
