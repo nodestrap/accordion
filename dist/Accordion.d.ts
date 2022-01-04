@@ -10,6 +10,7 @@ export declare const useAccordionItemSheet: import("@cssfn/types").Factory<impor
 export declare const cssProps: import("@cssfn/css-config").Refs<{}>, cssDecls: import("@cssfn/css-config").Decls<{}>, cssVals: import("@cssfn/css-config").Vals<{}>, cssConfig: import("@cssfn/css-config").CssConfigSettings;
 export interface AccordionItemProps<TElement extends HTMLElement = HTMLElement> extends ListItemProps<TElement>, TogglerActiveProps {
     label?: string | React.ReactNode;
+    lazy?: boolean;
 }
 export declare function AccordionItem<TElement extends HTMLElement = HTMLElement>(props: AccordionItemProps<TElement>): JSX.Element;
 export declare namespace AccordionItem {

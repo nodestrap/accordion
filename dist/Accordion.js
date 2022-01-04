@@ -47,8 +47,8 @@ export const usesAccordionItemLayout = (options) => {
     // options:
     options = normalizeOrientationRule(options, defaultOrientationRuleOptions);
     const [orientationBlockSelector, orientationInlineSelector] = usesOrientationRule(options);
-    const parentOrientationBlockSelector = `${orientationBlockSelector}>*>&`;
-    const parentOrientationInlineSelector = `${orientationInlineSelector}>*>&`;
+    const parentOrientationBlockSelector = [`${orientationBlockSelector}>*>&`, `${orientationBlockSelector}>&`];
+    const parentOrientationInlineSelector = [`${orientationInlineSelector}>*>&`, `${orientationInlineSelector}>&`];
     return composition([
         imports([
             // layouts:
@@ -182,6 +182,8 @@ export function AccordionItem(props) {
             theme: props.theme, size: props.size, gradient: props.gradient, outlined: props.outlined, mild: props.mild, 
             // accessibilities:
             inheritEnabled: props.inheritEnabled, enabled: propEnabled, inheritActive: props.inheritActive ?? true, active: isActive, 
+            // popups:
+            lazy: props.lazy, 
             // classes:
             mainClass: props.mainClass ?? sheet.main }, children)));
 }
