@@ -153,6 +153,10 @@ export function AccordionItem(props) {
             active: isActive, 
             // behaviors:
             actionCtrl: props.actionCtrl ?? true, 
+            // classes:
+            classes: [...(props.classes ?? []),
+                (isActive ? null : 'last-visible-child'),
+            ], 
             // events:
             onClick: (e) => {
                 props.onClick?.(e);
