@@ -3,11 +3,11 @@ import { default as React, } from 'react'; // base technology of our nodestrap c
 // cssfn:
 import { 
 // compositions:
-composition, mainComposition, imports, 
-// layouts:
-layout, 
+mainComposition, 
+// styles:
+style, imports, 
 // rules:
-variants, rule, } from '@cssfn/cssfn'; // cssfn core
+rule, } from '@cssfn/cssfn'; // cssfn core
 import { 
 // hooks:
 createUseSheet, } from '@cssfn/react-cssfn'; // cssfn for react
@@ -49,8 +49,8 @@ export const usesAccordionItemLayout = (options) => {
     const [orientationBlockSelector, orientationInlineSelector] = usesOrientationRule(options);
     const parentOrientationBlockSelector = [`${orientationBlockSelector}>*>&`, `${orientationBlockSelector}>&`];
     const parentOrientationInlineSelector = [`${orientationInlineSelector}>*>&`, `${orientationInlineSelector}>&`];
-    return composition([
-        imports([
+    return style({
+        ...imports([
             // layouts:
             usesCollapseLayout({
                 orientationBlockSelector: parentOrientationBlockSelector,
@@ -58,65 +58,54 @@ export const usesAccordionItemLayout = (options) => {
             }),
             usesListItemLayout(options), // already handled the `parentOrientation(Block|Inline)Selector` internally
         ]),
-        layout({
+        ...style({
             // customize:
-            ...usesGeneralProps(cssProps), // apply general cssProps
+            ...usesGeneralProps(cssProps),
+            ...rule(parentOrientationBlockSelector, {
+                // overwrites propName = propName{Block}:
+                ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, 'block')),
+            }),
+            ...rule(parentOrientationInlineSelector, {
+                // overwrites propName = propName{Inline}:
+                ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, 'inline')),
+            }),
         }),
-        variants([
-            /* the orientation variants are part of the layout, because without these variants the layout is broken */
-            rule(parentOrientationBlockSelector, [
-                layout({
-                    // overwrites propName = propName{Block}:
-                    ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, 'block')),
-                }),
-            ]),
-            rule(parentOrientationInlineSelector, [
-                layout({
-                    // overwrites propName = propName{Inline}:
-                    ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, 'inline')),
-                }),
-            ]),
-        ]),
-    ]);
+    });
 };
 export const usesAccordionItemVariants = () => {
     // dependencies:
     // layouts:
-    const [sizes] = usesSizeVariant((sizeName) => composition([
-        layout({
-            // overwrites propName = propName{SizeName}:
-            ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, sizeName)),
-        }),
-    ]));
-    return composition([
-        imports([
+    const [sizes] = usesSizeVariant((sizeName) => style({
+        // overwrites propName = propName{SizeName}:
+        ...overwriteProps(cssDecls, usesSuffixedProps(cssProps, sizeName)),
+    }));
+    return style({
+        ...imports([
             // variants:
             usesCollapseVariants(),
             usesListItemVariants(),
             // layouts:
             sizes(),
         ]),
-    ]);
+    });
 };
 export const usesAccordionItemStates = () => {
-    return composition([
-        imports([
+    return style({
+        ...imports([
             // states:
             usesCollapseStates(),
         ]),
-    ]);
+    });
 };
 export const useAccordionItemSheet = createUseSheet(() => [
-    mainComposition([
-        imports([
-            // layouts:
-            usesAccordionItemLayout(),
-            // variants:
-            usesAccordionItemVariants(),
-            // states:
-            usesAccordionItemStates(),
-        ]),
-    ]),
+    mainComposition(imports([
+        // layouts:
+        usesAccordionItemLayout(),
+        // variants:
+        usesAccordionItemVariants(),
+        // states:
+        usesAccordionItemStates(),
+    ])),
 ], /*sheetId :*/ '3mq5z5qt4v'); // an unique salt for SSR support, ensures the server-side & client-side have the same generated class names
 // configs:
 export const [cssProps, cssDecls, cssVals, cssConfig] = createCssConfig(() => {
