@@ -1,7 +1,8 @@
 import { default as React } from 'react';
+import type { ElementProps } from '@nodestrap/element';
 import { OrientationRuleOptions } from '@nodestrap/basic';
 import { TogglerActiveProps } from '@nodestrap/indicator';
-import { defaultOrientationRuleOptions, OrientationName, OrientationVariant, ListStyle, ListVariant, ListItemProps, ListSeparatorItem, ListProps, List } from '@nodestrap/list';
+import { defaultOrientationRuleOptions, OrientationName, OrientationVariant, ListStyle, ListVariant, ListItemProps, ListSeparatorItem, ListProps } from '@nodestrap/list';
 export { defaultOrientationRuleOptions };
 export declare const usesAccordionItemLayout: (options?: OrientationRuleOptions | undefined) => import("@cssfn/cssfn").Rule;
 export declare const usesAccordionItemVariants: () => import("@cssfn/cssfn").Rule;
@@ -11,6 +12,7 @@ export declare const cssProps: import("@cssfn/css-config").Refs<{}>, cssDecls: i
 export interface AccordionItemProps<TElement extends HTMLElement = HTMLElement> extends ListItemProps<TElement>, TogglerActiveProps {
     label?: string | React.ReactNode;
     lazy?: boolean;
+    collapse?: React.ReactComponentElement<any, ElementProps>;
 }
 export declare function AccordionItem<TElement extends HTMLElement = HTMLElement>(props: AccordionItemProps<TElement>): JSX.Element;
 export declare namespace AccordionItem {
@@ -19,7 +21,14 @@ export declare namespace AccordionItem {
 export type { AccordionItemProps as ItemProps };
 export { AccordionItem as Item };
 export { ListSeparatorItem, ListSeparatorItem as AccordionSeparatorItem, ListSeparatorItem as SeparatorItem };
+export declare type ListStyleMod = Exclude<ListStyle, 'tab' | 'bullet'>;
+export interface AccordionProps<TElement extends HTMLElement = HTMLElement> extends Omit<ListProps<TElement>, 'listStyle'> {
+    listStyle?: ListStyleMod;
+}
+export declare function Accordion<TElement extends HTMLElement = HTMLElement>(props: AccordionProps<TElement>): JSX.Element;
+export declare namespace Accordion {
+    var prototype: any;
+}
+export { Accordion as default };
 export type { OrientationName, OrientationVariant };
 export type { ListStyle, ListVariant };
-export type { ListProps, ListProps as AccordionProps };
-export { List as default, List as Accordion };

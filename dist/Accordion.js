@@ -14,11 +14,6 @@ createUseSheet, } from '@cssfn/react-cssfn'; // cssfn for react
 import { createCssConfig, 
 // utilities:
 usesGeneralProps, usesSuffixedProps, overwriteProps, } from '@cssfn/css-config'; // Stores & retrieves configuration using *css custom properties* (css variables)
-// nodestrap utilities:
-import { 
-// hooks:
-usePropEnabled, } from '@nodestrap/accessibilities';
-// nodestrap components:
 import { 
 // hooks:
 usesSizeVariant, normalizeOrientationRule, usesOrientationRule, } from '@nodestrap/basic';
@@ -30,9 +25,7 @@ defaultOrientationRuleOptions,
 usesListItemLayout, usesListItemVariants, ListItem, ListSeparatorItem, List, } from '@nodestrap/list';
 import { 
 // styles:
-usesCollapseLayout, usesCollapseVariants, usesCollapseStates, 
-// react components:
-Collapse, } from '@nodestrap/collapse';
+usesCollapseLayout, usesCollapseVariants, usesCollapseStates, Collapse, } from '@nodestrap/collapse';
 // hooks:
 // layouts:
 export { defaultOrientationRuleOptions };
@@ -116,8 +109,6 @@ export const [cssProps, cssDecls, cssVals, cssConfig] = createCssConfig(() => {
 export function AccordionItem(props) {
     // styles:
     const sheet = useAccordionItemSheet();
-    // states:
-    const [isActive, setActive] = useTogglerActive(props);
     // rest props:
     const { 
     // accessibilities:
@@ -126,16 +117,54 @@ export function AccordionItem(props) {
     active, // delete, already handled by `useTogglerActive`
     onActiveChange, // delete, already handled by `useTogglerActive`
     // children:
-    children, ...restProps } = props;
+    children, ...restAccordionProps } = props;
+    const { 
+    // layouts:
+    size, 
+    // orientation, // already handled on css
+    nude, 
+    // colors:
+    theme, gradient, outlined, mild, 
+    // <Indicator> states:
+    enabled, inheritEnabled, readOnly, inheritReadOnly, 
+    // active,
+    inheritActive = true, // change default value to `true`
+    // performances:
+    lazy, 
+    // components:
+    collapse = React.createElement(Collapse, null), } = restAccordionProps;
+    // states:
+    const [isActive, setActive] = useTogglerActive({ ...props, inheritActive });
     // handlers:
     const handleToggleActive = () => {
         setActive(!isActive); // toggle active
     };
-    // fn props:
-    const propEnabled = usePropEnabled(props);
     // jsx:
+    const defaultCollapseProps = {
+        // variants:
+        // layouts:
+        size: size,
+        // orientation : orientation, // already handled on css
+        nude: nude,
+        // colors:
+        theme: theme,
+        gradient: gradient,
+        outlined: outlined,
+        mild: mild,
+        // <Indicator> states:
+        enabled: enabled,
+        inheritEnabled: inheritEnabled,
+        readOnly: readOnly,
+        inheritReadOnly: inheritReadOnly,
+        active: isActive,
+        inheritActive: false,
+        // performances:
+        lazy: lazy,
+        // classes:
+        mainClass: sheet.main,
+    };
     return (React.createElement(React.Fragment, null,
-        React.createElement(ListItem, { ...restProps, 
+        React.createElement(ListItem, { ...restAccordionProps, 
             // semantics:
             semanticTag: props.semanticTag ?? ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], semanticRole: props.semanticRole ?? 'heading', "aria-expanded": props['aria-expanded'] ?? isActive, 
             // accessibilities:
@@ -170,18 +199,14 @@ export function AccordionItem(props) {
                     } // if
                 } // if
             } }, label),
-        React.createElement(Collapse, { 
-            // variants:
-            theme: props.theme, size: props.size, gradient: props.gradient, outlined: props.outlined, mild: props.mild, 
-            // accessibilities:
-            inheritEnabled: props.inheritEnabled, enabled: propEnabled, inheritActive: props.inheritActive ?? true, active: isActive, 
-            // popups:
-            lazy: props.lazy, 
-            // classes:
-            mainClass: props.mainClass ?? sheet.main }, children)));
+        React.cloneElement(React.cloneElement(collapse, defaultCollapseProps, children), collapse.props)));
 }
 AccordionItem.prototype = ListItem.prototype; // mark as ListItem compatible
 export { AccordionItem as Item };
 // ListSeparatorItem => AccordionSeparatorItem
 export { ListSeparatorItem, ListSeparatorItem as AccordionSeparatorItem, ListSeparatorItem as SeparatorItem };
-export { List as default, List as Accordion };
+export function Accordion(props) {
+    return React.createElement(List, { ...props });
+}
+Accordion.prototype = List.prototype; // mark as List compatible
+export { Accordion as default };
