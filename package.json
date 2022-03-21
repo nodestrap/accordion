@@ -1,6 +1,6 @@
 {
   "name": "@nodestrap/accordion",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Represents a series of toggleable collapsing content.",
   "type": "module",
   "main": "dist/Accordion.js",
@@ -35,6 +35,7 @@
     "@cssfn/css-config": "^1.0.8",
     "@cssfn/cssfn": "^1.0.12",
     "@cssfn/react-cssfn": "^1.0.11",
+    "@cssfn/types": "^1.0.4",
     "@nodestrap/basic": "^4.0.7",
     "@nodestrap/collapse": "^4.0.5",
     "@nodestrap/element": "^4.0.7",

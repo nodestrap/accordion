@@ -1,4 +1,5 @@
 import { default as React } from 'react';
+import type { SingleOrArray } from '@cssfn/types';
 import type { ElementProps } from '@nodestrap/element';
 import { OrientationRuleOptions } from '@nodestrap/basic';
 import { TogglerActiveProps } from '@nodestrap/indicator';
@@ -23,7 +24,7 @@ export { AccordionItem as Item };
 export { ListSeparatorItem, ListSeparatorItem as AccordionSeparatorItem, ListSeparatorItem as SeparatorItem };
 export declare type ListStyleMod = Exclude<ListStyle, 'tab' | 'bullet'>;
 export interface AccordionProps<TElement extends HTMLElement = HTMLElement> extends Omit<ListProps<TElement>, 'listStyle'> {
-    listStyle?: ListStyleMod;
+    listStyle?: SingleOrArray<ListStyleMod>;
 }
 export declare function Accordion<TElement extends HTMLElement = HTMLElement>(props: AccordionProps<TElement>): JSX.Element;
 export declare namespace Accordion {
