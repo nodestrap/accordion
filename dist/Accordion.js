@@ -115,6 +115,8 @@ export function AccordionItem(props) {
     defaultActive, // delete, already handled by `useTogglerActive`
     active, // delete, already handled by `useTogglerActive`
     onActiveChange, // delete, already handled by `useTogglerActive`
+    // behaviors:
+    actionCtrl = true, // change default value to `true`
     // children:
     children, ...restAccordionProps } = props;
     const { 
@@ -169,7 +171,7 @@ export function AccordionItem(props) {
             // accessibilities:
             active: isActive, 
             // behaviors:
-            actionCtrl: props.actionCtrl ?? true, 
+            actionCtrl: actionCtrl, 
             // classes:
             classes: [...(props.classes ?? []),
                 (isActive ? null : 'last-visible-child'),
@@ -177,13 +179,13 @@ export function AccordionItem(props) {
             // events:
             onClick: (e) => {
                 props.onClick?.(e);
-                if (!e.defaultPrevented) {
+                if (actionCtrl && !e.defaultPrevented) {
                     handleToggleActive();
                     e.preventDefault();
                 } // if
             }, onKeyDown: (e) => {
                 props.onKeyDown?.(e);
-                if (!e.defaultPrevented) {
+                if (actionCtrl && !e.defaultPrevented) {
                     if ((e.key === ' ') || (e.code === 'Space')) {
                         // prevents pressing space for scrolling page
                         e.preventDefault();
@@ -191,7 +193,7 @@ export function AccordionItem(props) {
                 } // if
             }, onKeyUp: (e) => {
                 props.onKeyUp?.(e);
-                if (!e.defaultPrevented) {
+                if (actionCtrl && !e.defaultPrevented) {
                     if ((e.key === ' ') || (e.code === 'Space')) {
                         handleToggleActive();
                         e.preventDefault();
